@@ -1,0 +1,332 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}Health History{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="gradient-bg px-4 py-6 sm:px-6 text-white">
+        <h1 class="text-3xl font-bold flex items-center">
+            <i class="fas fa-history mr-3"></i>Health History
+        </h1>
+        <p class="mt-2 text-blue-100">Your complete history of diabetes risk factors, lifestyle tracking, and predictions</p>
+    </div>
+</div>
+
+{% if messages %}
+<div class="mt-4">
+    {% for message in messages %}
+        <div class="{% if message.tags == 'error' %}bg-red-50 border border-red-400 text-red-700{% else %}bg-green-50 border border-green-400 text-green-700{% endif %} px-4 py-3 rounded-lg animate-fadeIn flex items-start mb-4" role="alert">
+            <i class="{% if message.tags == 'error' %}fas fa-exclamation-circle text-red-400{% else %}fas fa-check-circle text-green-400{% endif %} mr-2 mt-0.5"></i>
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Filter Controls -->
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-4 sm:px-6 border-b border-gray-200">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <h2 class="text-lg font-bold text-gray-900 flex items-center mb-2 md:mb-0">
+                <i class="fas fa-filter text-blue-500 mr-2"></i>Filter History
+            </h2>
+            <div class="flex flex-wrap gap-2">
+                <a href="?type=all" class="px-3 py-1.5 text-sm font-medium rounded-md {% if history_type == 'all' %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                    All History
+                </a>
+                <a href="?type=risk" class="px-3 py-1.5 text-sm font-medium rounded-md {% if history_type == 'risk' %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                    <i class="fas fa-heartbeat mr-1"></i>Risk Assessments
+                </a>
+                <a href="?type=lifestyle" class="px-3 py-1.5 text-sm font-medium rounded-md {% if history_type == 'lifestyle' %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                    <i class="fas fa-running mr-1"></i>Lifestyle
+                </a>
+                <a href="?type=progress" class="px-3 py-1.5 text-sm font-medium rounded-md {% if history_type == 'progress' %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                    <i class="fas fa-chart-line mr-1"></i>Progress
+                </a>
+                <a href="?type=predictions" class="px-3 py-1.5 text-sm font-medium rounded-md {% if history_type == 'predictions' %}bg-blue-600 text-white{% else %}bg-gray-100 text-gray-700 hover:bg-gray-200{% endif %}">
+                    <i class="fas fa-calculator mr-1"></i>Predictions
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Data Controls -->
+<div class="mt-4 flex flex-col md:flex-row gap-4 justify-end">
+    <a href="{% url 'export_data' 'risk_assessments' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+        <i class="fas fa-download mr-2 text-red-500"></i>Export Risk Data
+    </a>
+    <a href="{% url 'export_data' 'lifestyle' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+        <i class="fas fa-download mr-2 text-blue-500"></i>Export Lifestyle Data
+    </a>
+    <a href="{% url 'export_data' 'progress' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+        <i class="fas fa-download mr-2 text-green-500"></i>Export Progress Data
+    </a>
+    <a href="{% url 'export_data' 'predictions' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+        <i class="fas fa-download mr-2 text-purple-500"></i>Export Predictions
+    </a>
+</div>
+
+<!-- Risk Assessment History -->
+{% if history_type == 'all' or history_type == 'risk' %}
+{% if risk_assessments %}
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center border-b border-gray-200">
+        <i class="fas fa-heartbeat text-red-500 mr-3 text-xl"></i>
+        <h2 class="text-lg font-bold text-gray-900">Risk Assessments</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BMI</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Blood Pressure</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Family History</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for assessment in risk_assessments %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ assessment.date|date:"M d, Y H:i" }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ assessment.age }} years</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ assessment.bmi }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ assessment.blood_pressure }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if assessment.family_history %}bg-red-100 text-red-800{% else %}bg-green-100 text-green-800{% endif %}">
+                            {{ assessment.family_history|yesno:"Yes,No" }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+<!-- Lifestyle History -->
+{% if history_type == 'all' or history_type == 'lifestyle' %}
+{% if lifestyle_entries %}
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center border-b border-gray-200">
+        <i class="fas fa-running text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-lg font-bold text-gray-900">Lifestyle Tracking</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activity</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Diet</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sleep</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for entry in lifestyle_entries %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ entry.date|date:"M d, Y H:i" }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {{ entry.activity_level }} min/week
+                        <span class="text-xs text-gray-500 block">({{ entry.get_activity_type_display }})</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {{ entry.meals_per_day }} meals/day
+                        <span class="text-xs text-gray-500 block">({{ entry.get_diet_type_display }})</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {{ entry.sleep_hours }} hours
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        {% if entry.sleep_quality == 'excellent' %}bg-green-100 text-green-800
+                        {% elif entry.sleep_quality == 'good' %}bg-blue-100 text-blue-800
+                        {% elif entry.sleep_quality == 'fair' %}bg-yellow-100 text-yellow-800
+                        {% elif entry.sleep_quality == 'poor' %}bg-red-100 text-red-800
+                        {% endif %}">
+                            {{ entry.get_sleep_quality_display }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+<!-- Progress History -->
+{% if history_type == 'all' or history_type == 'progress' %}
+{% if progress_entries %}
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center border-b border-gray-200">
+        <i class="fas fa-chart-line text-green-500 mr-3 text-xl"></i>
+        <h2 class="text-lg font-bold text-gray-900">Progress Tracking</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Weight</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target Weight</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fasting Sugar</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post-Meal Sugar</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for entry in progress_entries %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ entry.date|date:"M d, Y H:i" }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ entry.current_weight }} kg</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {% if entry.target_weight %}
+                            {{ entry.target_weight }} kg
+                            <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
+                                <div class="bg-green-500 h-full" style="width: {{ entry.weight_progress_percentage }}%"></div>
+                            </div>
+                        {% else %}
+                            <span class="text-gray-400">Not set</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {% if entry.fasting_blood_sugar %}
+                            {{ entry.fasting_blood_sugar }} mg/dL
+                        {% else %}
+                            <span class="text-gray-400">Not recorded</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {% if entry.post_meal_blood_sugar %}
+                            {{ entry.post_meal_blood_sugar }} mg/dL
+                        {% else %}
+                            <span class="text-gray-400">Not recorded</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+<!-- Prediction History -->
+{% if history_type == 'all' or history_type == 'predictions' %}
+{% if predictions %}
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center border-b border-gray-200">
+        <i class="fas fa-calculator text-purple-500 mr-3 text-xl"></i>
+        <h2 class="text-lg font-bold text-gray-900">Diabetes Risk Predictions</h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Probability</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Glucose</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">BMI</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for prediction in predictions %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ prediction.date|date:"M d, Y H:i" }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if prediction.prediction %}bg-red-100 text-red-800{% else %}bg-green-100 text-green-800{% endif %}">
+                            {% if prediction.prediction %}
+                                <i class="fas fa-exclamation-triangle mr-1"></i> High Risk
+                            {% else %}
+                                <i class="fas fa-shield-alt mr-1"></i> Low Risk
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <div class="flex items-center">
+                            <div class="mr-2 {% if prediction.probability > 70 %}text-red-600{% elif prediction.probability > 50 %}text-orange-600{% elif prediction.probability > 30 %}text-yellow-600{% else %}text-green-600{% endif %} font-medium">
+                                {{ prediction.probability|floatformat:1 }}%
+                            </div>
+                            <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="{% if prediction.probability > 70 %}bg-red-500{% elif prediction.probability > 50 %}bg-orange-500{% elif prediction.probability > 30 %}bg-yellow-500{% else %}bg-green-500{% endif %} h-full" style="width: {{ prediction.probability }}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ prediction.glucose }} mg/dL</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ prediction.bmi }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ prediction.age }} years</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+
+<!-- Pagination -->
+{% if total_pages > 1 %}
+<div class="mt-8 flex justify-between">
+    <div>
+        {% if has_prev %}
+        <a href="?type={{ history_type }}&page={{ prev_page }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            <i class="fas fa-chevron-left mr-2"></i>Previous
+        </a>
+        {% else %}
+        <button disabled class="inline-flex items-center px-4 py-2 border border-gray-200 shadow-sm text-sm font-medium rounded-md text-gray-400 bg-gray-50 cursor-not-allowed">
+            <i class="fas fa-chevron-left mr-2"></i>Previous
+        </button>
+        {% endif %}
+    </div>
+    
+    <div class="text-sm text-gray-700">
+        Page {{ current_page }} of {{ total_pages }}
+    </div>
+    
+    <div>
+        {% if has_next %}
+        <a href="?type={{ history_type }}&page={{ next_page }}" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Next<i class="fas fa-chevron-right ml-2"></i>
+        </a>
+        {% else %}
+        <button disabled class="inline-flex items-center px-4 py-2 border border-gray-200 shadow-sm text-sm font-medium rounded-md text-gray-400 bg-gray-50 cursor-not-allowed">
+            Next<i class="fas fa-chevron-right ml-2"></i>
+        </button>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<!-- Empty State -->
+{% if not risk_assessments and not lifestyle_entries and not progress_entries and not predictions %}
+<div class="mt-8 bg-white shadow-md rounded-lg p-8 text-center">
+    <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+        <i class="fas fa-file-alt text-blue-600 text-2xl"></i>
+    </div>
+    <h3 class="text-lg font-medium text-gray-900">No history data found</h3>
+    <p class="mt-2 text-sm text-gray-500">
+        Start tracking your health data to see your history here.
+    </p>
+    <div class="mt-6">
+        <a href="{% url 'tracker' %}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white gradient-bg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <i class="fas fa-plus-circle mr-2"></i>Add Health Data
+        </a>
+    </div>
+</div>
+{% endif %}
+
+<style>
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,435 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}Predict{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="gradient-bg px-4 py-6 sm:px-6 text-white">
+        <h1 class="text-3xl font-bold">Diabetes Risk Prediction</h1>
+        <p class="mt-2 text-blue-100">Enter your health information below to get a personalized risk assessment</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="bg-blue-50 p-4 mb-6 rounded-lg border border-blue-100">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-blue-500 mt-0.5"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800">Important Information</h3>
+                    <p class="text-sm text-blue-700 mt-1">Fields marked with * are required for accurate prediction. The more information you provide, the more accurate your assessment will be.</p>
+                </div>
+            </div>
+        </div>
+        
+        <form id="prediction-form" class="space-y-8">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 gap-y-6 gap-x-6 sm:grid-cols-2">
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="pregnancies" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-baby text-blue-500 mr-2"></i>Number of Pregnancies
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="pregnancies" id="pregnancies" min="0" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="0">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Enter 0 if not applicable</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="glucose" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-tachometer-alt text-blue-500 mr-2"></i>Glucose Level (mg/dL) *
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="glucose" id="glucose" min="0" required class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="120">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Normal range: 70-100 mg/dL</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="blood_pressure" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-heartbeat text-blue-500 mr-2"></i>Blood Pressure (mm Hg) *
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="blood_pressure" id="blood_pressure" min="0" required class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="80">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Normal range: 90-120 mm Hg</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="skin_thickness" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-ruler-vertical text-blue-500 mr-2"></i>Skin Thickness (mm)
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="skin_thickness" id="skin_thickness" min="0" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="20">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Triceps skin fold thickness</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="insulin" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-syringe text-blue-500 mr-2"></i>Insulin Level (mu U/ml)
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="insulin" id="insulin" min="0" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="80">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">2-hour serum insulin</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="bmi" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-weight text-blue-500 mr-2"></i>BMI (kg/m²) *
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="bmi" id="bmi" min="0" step="0.1" required class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="25.0">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Normal range: 18.5-24.9</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="diabetes_pedigree" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-dna text-blue-500 mr-2"></i>Diabetes Pedigree Function
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="diabetes_pedigree" id="diabetes_pedigree" min="0" step="0.001" class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="0.5">
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Family history of diabetes</p>
+                </div>
+
+                <div class="card-hover bg-white p-5 rounded-lg border border-gray-200 shadow-sm">
+                    <label for="age" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-user-clock text-blue-500 mr-2"></i>Age (years) *
+                    </label>
+                    <div class="mt-1">
+                        <input type="number" name="age" id="age" min="0" required class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center pt-4">
+                <button type="submit" class="gradient-bg inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-md text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+                    <i class="fas fa-calculator mr-2"></i> Get Prediction
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Include BMI Calculator -->
+{% include 'predictor/bmi_calculator.html' %}
+
+<div id="result-container" class="mt-8 bg-white shadow-md rounded-lg overflow-hidden hidden">
+    <div class="gradient-bg px-4 py-5 sm:px-6 text-white">
+        <h2 class="text-2xl font-bold">Your Prediction Results</h2>
+        <p class="mt-2 text-blue-100">Based on the information you provided</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div class="card-hover bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                    <i class="fas fa-stethoscope text-blue-500 mr-2"></i>Prediction
+                </h3>
+                <div class="mt-4 flex items-center">
+                    <div id="prediction-badge" class="px-4 py-2 rounded-full text-sm font-medium"></div>
+                </div>
+                <p id="prediction-description" class="mt-3 text-sm text-gray-500"></p>
+            </div>
+            
+            <div class="card-hover bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                    <i class="fas fa-chart-pie text-blue-500 mr-2"></i>Risk Probability
+                </h3>
+                <div class="mt-4">
+                    <div class="relative pt-1">
+                        <div class="flex mb-2 items-center justify-between">
+                            <div>
+                                <span id="probability-value" class="text-xl font-bold text-blue-600"></span>
+                            </div>
+                        </div>
+                        <div class="overflow-hidden h-4 mb-4 text-xs flex rounded bg-blue-200">
+                            <div id="probability-bar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500 rounded-r" style="width: 0%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>Low Risk</span>
+                            <span>Moderate Risk</span>
+                            <span>High Risk</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-8 card-hover bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                <i class="fas fa-clipboard-list text-blue-500 mr-2"></i>Recommendations
+            </h3>
+            <div id="recommendations" class="mt-4 text-sm text-gray-600">
+                <!-- Recommendations will be inserted here -->
+            </div>
+        </div>
+        
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <a href="{% url 'resources' %}" class="gradient-bg inline-flex items-center px-5 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+                <i class="fas fa-external-link-alt mr-2"></i>View Resources
+            </a>
+            <a href="{% url 'tracker' %}" class="inline-flex items-center px-5 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+                <i class="fas fa-chart-line mr-2"></i>Track Your Progress
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('prediction-form');
+    const resultContainer = document.getElementById('result-container');
+    const predictionBadge = document.getElementById('prediction-badge');
+    const predictionDescription = document.getElementById('prediction-description');
+    const probabilityValue = document.getElementById('probability-value');
+    const probabilityBar = document.getElementById('probability-bar');
+    const recommendations = document.getElementById('recommendations');
+    
+    // Add validation function to check if required fields are filled
+    function validateForm() {
+        let valid = true;
+        const requiredFields = ['glucose', 'blood_pressure', 'bmi', 'age'];
+        
+        requiredFields.forEach(field => {
+            const input = document.getElementById(field);
+            if (!input.value) {
+                input.classList.add('border-red-500');
+                input.classList.add('animate-pulse');
+                valid = false;
+            } else {
+                input.classList.remove('border-red-500');
+                input.classList.remove('animate-pulse');
+            }
+        });
+        
+        return valid;
+    }
+    
+    // Add input event listeners to clear error styling
+    document.querySelectorAll('#prediction-form input').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.remove('border-red-500');
+            this.classList.remove('animate-pulse');
+        });
+    });
+    
+    // Add smooth scroll to results after prediction
+    function scrollToResults() {
+        resultContainer.scrollIntoView({behavior: 'smooth'});
+    }
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate form before submission
+        if (!validateForm()) {
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mt-4 animate-pulse';
+            errorMessage.innerHTML = `
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-circle text-red-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p>Please fill in all required fields (marked with *).</p>
+                    </div>
+                </div>
+            `;
+            
+            // Remove any existing error message
+            const existingError = form.querySelector('.bg-red-50');
+            if (existingError) {
+                form.removeChild(existingError);
+            }
+            
+            form.appendChild(errorMessage);
+            
+            // Auto-remove error after 4 seconds
+            setTimeout(() => {
+                if (errorMessage.parentNode === form) {
+                    form.removeChild(errorMessage);
+                }
+            }, 4000);
+            
+            return;
+        }
+        
+        // Show loading state
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Processing...`;
+        
+        const formData = new FormData(form);
+        
+        fetch('{% url "predict" %}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Reset button state
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            
+            if (data.success) {
+                // Show result container with animation
+                resultContainer.classList.remove('hidden');
+                resultContainer.classList.add('animate-fadeIn');
+                
+                // Scroll to results after a small delay
+                setTimeout(scrollToResults, 100);
+                
+                // Update prediction badge
+                if (data.prediction === 1) {
+                    predictionBadge.textContent = 'High Risk';
+                    predictionBadge.className = 'px-4 py-2 rounded-full text-sm font-medium bg-red-100 text-red-800 border border-red-200';
+                    predictionDescription.textContent = 'Based on your information, you may be at risk for diabetes. This does not mean you have diabetes, but suggests you should consult with a healthcare provider.';
+                } else {
+                    predictionBadge.textContent = 'Low Risk';
+                    predictionBadge.className = 'px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200';
+                    predictionDescription.textContent = 'Based on your information, you appear to be at low risk for diabetes. Continue maintaining healthy habits to keep your risk low.';
+                }
+                
+                // Update probability with animation
+                const probability = data.probability.toFixed(1);
+                probabilityValue.textContent = `${probability}%`;
+                
+                // Animate the probability bar
+                setTimeout(() => {
+                    probabilityBar.style.width = `${probability}%`;
+                    probabilityBar.style.transition = 'width 1s ease-in-out';
+                }, 100);
+                
+                // Update recommendations
+                if (data.prediction === 1) {
+                    recommendations.innerHTML = `
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-user-md text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Schedule a consultation with your healthcare provider for a proper diagnosis.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-vial text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Monitor your blood sugar levels regularly.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-apple-alt text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Adopt a balanced diet with controlled carbohydrate intake.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-running text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Engage in regular physical activity (at least 150 minutes per week).</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-weight text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Maintain a healthy weight through diet and exercise.</span>
+                            </li>
+                        </ul>
+                    `;
+                } else {
+                    recommendations.innerHTML = `
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-running text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Continue maintaining a healthy lifestyle with regular exercise.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-apple-alt text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Eat a balanced diet rich in fruits, vegetables, and whole grains.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-calendar-check text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Schedule regular check-ups with your healthcare provider.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-dna text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Be aware of your family history and monitor your health indicators.</span>
+                            </li>
+                        </ul>
+                    `;
+                }
+            } else {
+                // Show error with toast-like notification
+                const errorToast = document.createElement('div');
+                errorToast.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+                errorToast.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        <p>Error: ${data.error}</p>
+                    </div>
+                `;
+                document.body.appendChild(errorToast);
+                
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    errorToast.classList.add('animate-fadeOut');
+                    setTimeout(() => {
+                        if (errorToast.parentNode === document.body) {
+                            document.body.removeChild(errorToast);
+                        }
+                    }, 300);
+                }, 5000);
+            }
+        })
+        .catch(error => {
+            // Reset button state
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            
+            console.error('Error:', error);
+            
+            // Show error toast
+            const errorToast = document.createElement('div');
+            errorToast.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fadeIn';
+            errorToast.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    <p>An error occurred while processing your request. Please try again.</p>
+                </div>
+            `;
+            document.body.appendChild(errorToast);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                errorToast.classList.add('animate-fadeOut');
+                setTimeout(() => {
+                    if (errorToast.parentNode === document.body) {
+                        document.body.removeChild(errorToast);
+                    }
+                }, 300);
+            }, 5000);
+        });
+    });
+});
+</script>
+
+<style>
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+.animate-fadeOut {
+    animation: fadeOut 0.3s ease-in-out;
+}
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(10px); }
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .7; }
+}
+</style>
+{% endblock %} 

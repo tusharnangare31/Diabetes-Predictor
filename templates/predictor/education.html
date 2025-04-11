@@ -1,0 +1,304 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}Diabetes Education{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="gradient-bg px-4 py-6 sm:px-6 text-white">
+        <h1 class="text-3xl font-bold flex items-center">
+            <i class="fas fa-book-medical mr-3"></i>Understanding Diabetes
+        </h1>
+        <p class="mt-2 text-blue-100">Comprehensive information about diabetes types, symptoms, and management</p>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-stethoscope text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">Types of Diabetes</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="bg-blue-50 p-6 rounded-lg border border-blue-100 shadow-sm card-hover">
+                <div class="flex items-center mb-3">
+                    <div class="bg-blue-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-child text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-blue-800">Type 1 Diabetes</h3>
+                </div>
+                <p class="mt-2 text-sm text-blue-700">An autoimmune condition where the body attacks insulin-producing cells in the pancreas. Usually diagnosed in children and young adults.</p>
+                <div class="mt-4">
+                    <h4 class="text-sm font-medium text-blue-800">Key Characteristics:</h4>
+                    <ul class="mt-2 text-sm text-blue-700 list-disc pl-5 space-y-1">
+                        <li>Requires daily insulin injections</li>
+                        <li>Not preventable</li>
+                        <li>Accounts for 5-10% of all diabetes cases</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-green-50 p-6 rounded-lg border border-green-100 shadow-sm card-hover">
+                <div class="flex items-center mb-3">
+                    <div class="bg-green-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-user text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-green-800">Type 2 Diabetes</h3>
+                </div>
+                <p class="mt-2 text-sm text-green-700">The most common form of diabetes, where the body becomes resistant to insulin or doesn't produce enough insulin.</p>
+                <div class="mt-4">
+                    <h4 class="text-sm font-medium text-green-800">Key Characteristics:</h4>
+                    <ul class="mt-2 text-sm text-green-700 list-disc pl-5 space-y-1">
+                        <li>Often preventable through lifestyle changes</li>
+                        <li>Usually develops in adults over 45</li>
+                        <li>Accounts for 90-95% of all diabetes cases</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-purple-50 p-6 rounded-lg border border-purple-100 shadow-sm card-hover">
+                <div class="flex items-center mb-3">
+                    <div class="bg-purple-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-baby text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-purple-800">Gestational Diabetes</h3>
+                </div>
+                <p class="mt-2 text-sm text-purple-700">Develops during pregnancy and usually disappears after childbirth, but increases the risk of developing Type 2 diabetes later.</p>
+                <div class="mt-4">
+                    <h4 class="text-sm font-medium text-purple-800">Key Characteristics:</h4>
+                    <ul class="mt-2 text-sm text-purple-700 list-disc pl-5 space-y-1">
+                        <li>Affects 2-10% of pregnancies</li>
+                        <li>Usually diagnosed in the second or third trimester</li>
+                        <li>Managed through diet, exercise, and sometimes medication</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-exclamation-triangle text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">Common Symptoms</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 card-hover">
+                <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                    <i class="fas fa-bell text-red-500 mr-2"></i>
+                    Early Warning Signs
+                </h3>
+                <ul class="mt-4 space-y-3">
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-tint text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Frequent Urination</p>
+                            <p class="mt-1 text-sm text-gray-500">Especially at night, as the kidneys try to eliminate excess sugar.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-glass-water text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Increased Thirst</p>
+                            <p class="mt-1 text-sm text-gray-500">Due to dehydration from frequent urination.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-utensils text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Extreme Hunger</p>
+                            <p class="mt-1 text-sm text-gray-500">Despite eating, the body's cells can't access glucose for energy.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 card-hover">
+                <h3 class="text-lg font-medium text-gray-900 flex items-center">
+                    <i class="fas fa-list-check text-red-500 mr-2"></i>
+                    Additional Symptoms
+                </h3>
+                <ul class="mt-4 space-y-3">
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-weight-scale text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Unexplained Weight Loss</p>
+                            <p class="mt-1 text-sm text-gray-500">The body breaks down muscle and fat for energy when it can't use glucose.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-battery-quarter text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Fatigue</p>
+                            <p class="mt-1 text-sm text-gray-500">Due to the body's inability to use glucose for energy effectively.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-eye text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Blurred Vision</p>
+                            <p class="mt-1 text-sm text-gray-500">High blood sugar can cause the lens of the eye to swell.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-heart-pulse text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">Diabetes Management</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="bg-yellow-50 p-6 rounded-lg border border-yellow-100 shadow-sm card-hover">
+                <div class="flex items-center mb-3">
+                    <div class="bg-yellow-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-apple-alt text-yellow-600 text-lg"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-yellow-800">Diet and Nutrition</h3>
+                </div>
+                <p class="mt-2 text-sm text-yellow-700">A balanced diet is crucial for managing blood sugar levels.</p>
+                <div class="mt-4">
+                    <h4 class="text-sm font-medium text-yellow-800">Key Recommendations:</h4>
+                    <ul class="mt-2 text-sm text-yellow-700 list-disc pl-5 space-y-1">
+                        <li>Monitor carbohydrate intake</li>
+                        <li>Choose whole grains over refined grains</li>
+                        <li>Include lean proteins and healthy fats</li>
+                        <li>Eat plenty of non-starchy vegetables</li>
+                        <li>Limit processed foods and sugary drinks</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-indigo-50 p-6 rounded-lg border border-indigo-100 shadow-sm card-hover">
+                <div class="flex items-center mb-3">
+                    <div class="bg-indigo-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-running text-indigo-600 text-lg"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-indigo-800">Physical Activity</h3>
+                </div>
+                <p class="mt-2 text-sm text-indigo-700">Regular exercise helps improve insulin sensitivity and overall health.</p>
+                <div class="mt-4">
+                    <h4 class="text-sm font-medium text-indigo-800">Key Recommendations:</h4>
+                    <ul class="mt-2 text-sm text-indigo-700 list-disc pl-5 space-y-1">
+                        <li>Aim for at least 150 minutes of moderate activity weekly</li>
+                        <li>Include both aerobic and strength training</li>
+                        <li>Monitor blood sugar before and after exercise</li>
+                        <li>Stay hydrated during physical activity</li>
+                        <li>Consult healthcare provider before starting a new routine</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-red-50 p-6 rounded-lg border border-red-100 shadow-sm card-hover">
+                <div class="flex items-center mb-3">
+                    <div class="bg-red-100 rounded-full p-2 mr-3">
+                        <i class="fas fa-user-md text-red-600 text-lg"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-red-800">Medical Management</h3>
+                </div>
+                <p class="mt-2 text-sm text-red-700">Proper medical care is essential for diabetes management.</p>
+                <div class="mt-4">
+                    <h4 class="text-sm font-medium text-red-800">Key Recommendations:</h4>
+                    <ul class="mt-2 text-sm text-red-700 list-disc pl-5 space-y-1">
+                        <li>Regular check-ups with healthcare provider</li>
+                        <li>Monitor blood sugar levels as recommended</li>
+                        <li>Take medications as prescribed</li>
+                        <li>Get regular eye exams</li>
+                        <li>Check feet regularly for any issues</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-question-circle text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">Diabetes Myths and Facts</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm card-hover transform transition-all hover:border-red-200">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-red-100 rounded-full p-2">
+                        <i class="fas fa-times text-red-500"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Myth: Eating too much sugar causes diabetes</h3>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <p class="font-semibold text-red-500 mb-1">MYTH</p>
+                            <p class="text-gray-700">While a diet high in sugar can contribute to obesity, which is a risk factor for Type 2 diabetes, sugar consumption alone doesn't directly cause diabetes. Type 1 diabetes is an autoimmune condition, and Type 2 is influenced by genetics, lifestyle, and other factors.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm card-hover transform transition-all hover:border-red-200">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-red-100 rounded-full p-2">
+                        <i class="fas fa-times text-red-500"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Myth: People with diabetes can't eat carbohydrates</h3>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <p class="font-semibold text-red-500 mb-1">MYTH</p>
+                            <p class="text-gray-700">Carbohydrates are an important part of a balanced diet. People with diabetes can and should eat carbohydrates, but they need to monitor the amount and type, and how it affects their blood sugar levels.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm card-hover transform transition-all hover:border-red-200">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-red-100 rounded-full p-2">
+                        <i class="fas fa-times text-red-500"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Myth: Diabetes is not a serious disease</h3>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <p class="font-semibold text-red-500 mb-1">MYTH</p>
+                            <p class="text-gray-700">Diabetes is a serious chronic condition that can lead to complications such as heart disease, stroke, kidney failure, blindness, and nerve damage if not properly managed. It requires ongoing medical attention and lifestyle changes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 flex flex-wrap justify-center gap-4">
+    <a href="{% url 'predict' %}" class="gradient-bg inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-md text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+        <i class="fas fa-calculator mr-2"></i>Check Your Diabetes Risk
+    </a>
+    <a href="{% url 'resources' %}" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+        <i class="fas fa-external-link-alt mr-2"></i>Explore Resources
+    </a>
+</div>
+
+<style>
+.card-hover {
+    transition: all 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>
+{% endblock %} 

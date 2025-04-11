@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Predictor - {% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        .gradient-bg {
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+        }
+        .hero-pattern {
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%233b82f6' fill-opacity='0.05'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .active-nav {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-down {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .slide-down.show {
+            max-height: 1000px;
+        }
+        /* Pill-style indicator for active nav */
+        .nav-pill.active {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+        /* Mobile navbar improvements */
+        .mobile-menu {
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        .mobile-menu.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Profile dropdown improvements */
+        .profile-dropdown {
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.2s ease-in-out;
+        }
+        .profile-trigger:hover .profile-dropdown,
+        .profile-dropdown:hover {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    <header class="bg-white shadow sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="{% url 'home' %}" class="flex items-center">
+                            <i class="fas fa-heartbeat text-blue-600 text-2xl mr-2"></i>
+                            <span class="text-xl font-bold text-gray-900">Diabetes Predictor</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex md:items-center md:space-x-6">
+                    <div class="flex space-x-4">
+                        <a href="{% url 'home' %}" class="nav-pill px-3 py-2 rounded-md text-sm font-medium {% if request.path == '/' %}active{% else %}text-gray-700 hover:text-blue-600 hover:bg-blue-50{% endif %} transition-colors duration-200">
+                            <i class="fas fa-home mr-1.5"></i>Home
+                        </a>
+                        <a href="{% url 'predict' %}" class="nav-pill px-3 py-2 rounded-md text-sm font-medium {% if '/predict/' in request.path %}active{% else %}text-gray-700 hover:text-blue-600 hover:bg-blue-50{% endif %} transition-colors duration-200">
+                            <i class="fas fa-chart-line mr-1.5"></i>Predict
+                        </a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'tracker' %}" class="nav-pill px-3 py-2 rounded-md text-sm font-medium {% if '/tracker/' in request.path %}active{% else %}text-gray-700 hover:text-blue-600 hover:bg-blue-50{% endif %} transition-colors duration-200">
+                                <i class="fas fa-clipboard-list mr-1.5"></i>Tracker
+                            </a>
+                            <a href="{% url 'dashboard' %}" class="nav-pill px-3 py-2 rounded-md text-sm font-medium {% if '/dashboard/' in request.path %}active{% else %}text-gray-700 hover:text-blue-600 hover:bg-blue-50{% endif %} transition-colors duration-200">
+                                <i class="fas fa-tachometer-alt mr-1.5"></i>Dashboard
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'education' %}" class="nav-pill px-3 py-2 rounded-md text-sm font-medium {% if '/education/' in request.path %}active{% else %}text-gray-700 hover:text-blue-600 hover:bg-blue-50{% endif %} transition-colors duration-200">
+                            <i class="fas fa-book-open mr-1.5"></i>Education
+                        </a>
+                        <a href="{% url 'resources' %}" class="nav-pill px-3 py-2 rounded-md text-sm font-medium {% if '/resources/' in request.path %}active{% else %}text-gray-700 hover:text-blue-600 hover:bg-blue-50{% endif %} transition-colors duration-200">
+                            <i class="fas fa-external-link-alt mr-1.5"></i>Resources
+                        </a>
+                    </div>
+                    
+                    {% if user.is_authenticated %}
+                        <div class="ml-4 relative profile-trigger">
+                            <button type="button" class="flex text-sm bg-blue-100 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 p-2.5 border border-blue-200" id="user-menu-button">
+                                <span class="sr-only">Open user menu</span>
+                                <i class="fas fa-user text-blue-600"></i>
+                            </button>
+                            <div class="profile-dropdown absolute right-0 mt-2 w-60 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu">
+                                <div class="px-4 py-3 border-b border-gray-100">
+                                    <p class="text-sm text-gray-500">Signed in as</p>
+                                    <p class="text-sm font-medium text-gray-900 truncate">{{ user.username }}</p>
+                                    <p class="text-xs text-gray-500 truncate">{{ user.email }}</p>
+                                </div>
+                                <a href="{% url 'profile' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                    <i class="fas fa-user-circle mr-3 text-gray-400 w-4 text-center"></i>Your Profile
+                                </a>
+                                <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                    <i class="fas fa-tachometer-alt mr-3 text-gray-400 w-4 text-center"></i>Dashboard
+                                </a>
+                                <a href="{% url 'history' %}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+                                    <i class="fas fa-history mr-3 text-gray-400 w-4 text-center"></i>History
+                                </a>
+                                <div class="border-t border-gray-100 my-1"></div>
+                                <a href="{% url 'logout' %}" class="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50" role="menuitem">
+                                    <i class="fas fa-sign-out-alt mr-3 text-red-400 w-4 text-center"></i>Sign out
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="flex items-center space-x-3">
+                            <a href="{% url 'login' %}" class="inline-flex items-center px-3.5 py-1.5 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                <i class="fas fa-sign-in-alt mr-1.5"></i>Log in
+                            </a>
+                            <a href="{% url 'register' %}" class="inline-flex items-center px-3.5 py-1.5 border border-transparent text-sm font-medium rounded-md text-white gradient-bg shadow-sm hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                <i class="fas fa-user-plus mr-1.5"></i>Register
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}" class="mobile-profile-btn mr-3 p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-full">
+                        <i class="fas fa-user text-blue-600"></i>
+                    </a>
+                    {% endif %}
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-blue-600 hover:bg-blue-50 focus:outline-none transition-colors duration-200">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="mobile-menu shadow-lg md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if request.path == '/' %}bg-blue-50 text-blue-600{% else %}text-gray-700 hover:bg-blue-50 hover:text-blue-600{% endif %}">
+                    <i class="fas fa-home mr-2 w-5 text-center"></i>Home
+                </a>
+                <a href="{% url 'predict' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if '/predict/' in request.path %}bg-blue-50 text-blue-600{% else %}text-gray-700 hover:bg-blue-50 hover:text-blue-600{% endif %}">
+                    <i class="fas fa-chart-line mr-2 w-5 text-center"></i>Predict
+                </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'tracker' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if '/tracker/' in request.path %}bg-blue-50 text-blue-600{% else %}text-gray-700 hover:bg-blue-50 hover:text-blue-600{% endif %}">
+                        <i class="fas fa-clipboard-list mr-2 w-5 text-center"></i>Tracker
+                    </a>
+                    <a href="{% url 'dashboard' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if '/dashboard/' in request.path %}bg-blue-50 text-blue-600{% else %}text-gray-700 hover:bg-blue-50 hover:text-blue-600{% endif %}">
+                        <i class="fas fa-tachometer-alt mr-2 w-5 text-center"></i>Dashboard
+                    </a>
+                {% endif %}
+                <a href="{% url 'education' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if '/education/' in request.path %}bg-blue-50 text-blue-600{% else %}text-gray-700 hover:bg-blue-50 hover:text-blue-600{% endif %}">
+                    <i class="fas fa-book-open mr-2 w-5 text-center"></i>Education
+                </a>
+                <a href="{% url 'resources' %}" class="block px-3 py-2 rounded-md text-base font-medium {% if '/resources/' in request.path %}bg-blue-50 text-blue-600{% else %}text-gray-700 hover:bg-blue-50 hover:text-blue-600{% endif %}">
+                    <i class="fas fa-external-link-alt mr-2 w-5 text-center"></i>Resources
+                </a>
+            </div>
+            
+            {% if user.is_authenticated %}
+                <div class="pt-4 pb-3 border-t border-gray-200 bg-gray-50">
+                    <div class="flex items-center px-4">
+                        <div class="flex-shrink-0">
+                            <div class="h-10 w-10 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 flex items-center justify-center text-white">
+                                {{ user.username|first|upper }}
+                            </div>
+                        </div>
+                        <div class="ml-3">
+                            <div class="text-base font-medium text-gray-800">{{ user.username }}</div>
+                            <div class="text-sm font-medium text-gray-500">{{ user.email }}</div>
+                        </div>
+                    </div>
+                    <div class="mt-3 space-y-1 px-2">
+                        <a href="{% url 'profile' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                            <i class="fas fa-user-circle mr-2 w-5 text-center text-gray-500"></i>Your Profile
+                        </a>
+                        <a href="{% url 'history' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-600">
+                            <i class="fas fa-history mr-2 w-5 text-center text-gray-500"></i>History
+                        </a>
+                        <a href="{% url 'logout' %}" class="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50">
+                            <i class="fas fa-sign-out-alt mr-2 w-5 text-center text-red-500"></i>Sign out
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="pt-4 pb-3 border-t border-gray-200">
+                    <div class="grid grid-cols-2 gap-3 px-4">
+                        <a href="{% url 'login' %}" class="flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Log in
+                        </a>
+                        <a href="{% url 'register' %}" class="flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white gradient-bg hover:from-blue-700 hover:to-blue-800">
+                            <i class="fas fa-user-plus mr-2"></i>Register
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">About</h3>
+                    <p class="mt-4 text-sm text-gray-600">
+                        Diabetes Predictor is a tool to help you assess your risk of diabetes and track health metrics related to diabetes management.
+                    </p>
+                    <div class="flex space-x-6 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i class="fab fa-facebook-square text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i class="fab fa-twitter-square text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i class="fab fa-instagram-square text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-gray-500">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Resources</h3>
+                    <ul role="list" class="mt-4 space-y-4">
+                        <li>
+                            <a href="{% url 'education' %}" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-book-medical mr-2 text-gray-400"></i>Diabetes Education
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'resources' %}" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-link mr-2 text-gray-400"></i>Helpful Resources
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-question-circle mr-2 text-gray-400"></i>FAQ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-info-circle mr-2 text-gray-400"></i>About the Model
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Legal</h3>
+                    <ul role="list" class="mt-4 space-y-4">
+                        <li>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-shield-alt mr-2 text-gray-400"></i>Privacy Policy
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-file-contract mr-2 text-gray-400"></i>Terms of Service
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-file-alt mr-2 text-gray-400"></i>Disclaimer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-sm text-gray-600 hover:text-blue-600">
+                                <i class="fas fa-cookie mr-2 text-gray-400"></i>Cookie Policy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between">
+                <p class="text-sm text-gray-400">&copy; 2023 Diabetes Predictor. All rights reserved.</p>
+                <p class="text-sm text-gray-400 mt-2 md:mt-0">Medical Disclaimer: This tool is for informational purposes and is not a substitute for professional medical advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('show');
+                
+                // Toggle icon between bars and X
+                const icon = mobileMenuButton.querySelector('i');
+                if (mobileMenu.classList.contains('show')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInsideMenu = mobileMenu.contains(event.target);
+                const isClickOnButton = mobileMenuButton.contains(event.target);
+                
+                if (!isClickInsideMenu && !isClickOnButton && mobileMenu.classList.contains('show')) {
+                    mobileMenu.classList.remove('show');
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // Close menu when resizing to desktop view
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768 && mobileMenu.classList.contains('show')) {
+                    mobileMenu.classList.remove('show');
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

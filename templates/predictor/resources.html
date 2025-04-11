@@ -1,0 +1,308 @@
+{% extends 'predictor/base.html' %}
+
+{% block title %}Diabetes Resources{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="gradient-bg px-4 py-6 sm:px-6 text-white">
+        <h1 class="text-3xl font-bold flex items-center">
+            <i class="fas fa-link mr-3"></i>Diabetes Resources
+        </h1>
+        <p class="mt-2 text-blue-100">Helpful tools, links, and information for diabetes management</p>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-tools text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">Diabetes Management Tools</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
+                        <i class="fas fa-clipboard-list text-blue-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Blood Sugar Log</h3>
+                        <p class="mt-1 text-sm text-gray-500">Track your blood sugar levels over time</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="#" class="text-sm font-medium text-blue-600 hover:text-blue-500 inline-flex items-center">
+                        Download Template <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-green-100 rounded-full p-3">
+                        <i class="fas fa-calculator text-green-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Carb Counter</h3>
+                        <p class="mt-1 text-sm text-gray-500">Calculate carbohydrates in common foods</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="#" class="text-sm font-medium text-green-600 hover:text-green-500 inline-flex items-center">
+                        Use Calculator <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 card-hover">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-purple-100 rounded-full p-3">
+                        <i class="fas fa-pills text-purple-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Medication Schedule</h3>
+                        <p class="mt-1 text-sm text-gray-500">Create a personalized medication reminder</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="#" class="text-sm font-medium text-purple-600 hover:text-purple-500 inline-flex items-center">
+                        Create Schedule <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-graduation-cap text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">Educational Resources</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 card-hover">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-red-100 rounded-full p-3">
+                        <i class="fas fa-video text-red-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Diabetes Education Videos</h3>
+                        <p class="mt-1 text-sm text-gray-500">Watch educational videos about diabetes management, nutrition, and lifestyle changes.</p>
+                        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center">
+                                <i class="fas fa-utensils text-red-500 mb-2"></i>
+                                <p class="text-xs font-medium">Nutrition Basics</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center">
+                                <i class="fas fa-heartbeat text-red-500 mb-2"></i>
+                                <p class="text-xs font-medium">Exercise Tips</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 text-center">
+                                <i class="fas fa-syringe text-red-500 mb-2"></i>
+                                <p class="text-xs font-medium">Insulin Management</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="#" class="text-sm font-medium text-red-600 hover:text-red-500 inline-flex items-center">
+                                Browse Videos <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 card-hover">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-yellow-100 rounded-full p-3">
+                        <i class="fas fa-book text-yellow-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Diabetes Articles</h3>
+                        <p class="mt-1 text-sm text-gray-500">Read articles from medical experts about the latest research, treatment options, and lifestyle tips.</p>
+                        <div class="mt-4">
+                            <div class="flex items-center mb-2">
+                                <span class="flex-shrink-0 h-2 w-2 rounded-full bg-yellow-400 mr-2"></span>
+                                <span class="text-sm text-gray-600">New research on Type 2 diabetes prevention</span>
+                            </div>
+                            <div class="flex items-center mb-2">
+                                <span class="flex-shrink-0 h-2 w-2 rounded-full bg-yellow-400 mr-2"></span>
+                                <span class="text-sm text-gray-600">Understanding the glycemic index</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="flex-shrink-0 h-2 w-2 rounded-full bg-yellow-400 mr-2"></span>
+                                <span class="text-sm text-gray-600">Innovations in diabetes monitoring technology</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="#" class="text-sm font-medium text-yellow-600 hover:text-yellow-500 inline-flex items-center">
+                                Read Articles <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300 card-hover">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-indigo-100 rounded-full p-3">
+                        <i class="fas fa-users text-indigo-600 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900">Support Groups</h3>
+                        <p class="mt-1 text-sm text-gray-500">Find local and online support groups for people living with diabetes.</p>
+                        <div class="mt-4 p-3 bg-indigo-50 rounded-lg">
+                            <div class="flex items-center text-sm text-indigo-700">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                <span>Connecting with others who understand your experiences can provide emotional support and practical advice for managing diabetes.</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 inline-flex items-center">
+                                Find Support Groups <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden card-hover">
+    <div class="px-4 py-5 sm:px-6 flex items-center">
+        <i class="fas fa-globe text-blue-500 mr-3 text-xl"></i>
+        <h2 class="text-xl font-bold text-gray-900">External Resources</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="space-y-4">
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-external-link-alt text-gray-500 text-lg"></i>
+                </div>
+                <div class="ml-3 flex-grow">
+                    <h3 class="text-sm font-medium text-gray-900">American Diabetes Association</h3>
+                    <p class="mt-1 text-sm text-gray-500">Comprehensive information about diabetes, including research, advocacy, and resources.</p>
+                </div>
+                <div>
+                    <a href="https://www.diabetes.org" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-500 inline-flex items-center">
+                        Visit <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-external-link-alt text-gray-500 text-lg"></i>
+                </div>
+                <div class="ml-3 flex-grow">
+                    <h3 class="text-sm font-medium text-gray-900">Centers for Disease Control and Prevention</h3>
+                    <p class="mt-1 text-sm text-gray-500">Government resources on diabetes statistics, prevention, and management.</p>
+                </div>
+                <div>
+                    <a href="https://www.cdc.gov/diabetes" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-500 inline-flex items-center">
+                        Visit <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-external-link-alt text-gray-500 text-lg"></i>
+                </div>
+                <div class="ml-3 flex-grow">
+                    <h3 class="text-sm font-medium text-gray-900">World Health Organization</h3>
+                    <p class="mt-1 text-sm text-gray-500">Global information about diabetes, including statistics and international guidelines.</p>
+                </div>
+                <div>
+                    <a href="https://www.who.int/health-topics/diabetes" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-500 inline-flex items-center">
+                        Visit <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-external-link-alt text-gray-500 text-lg"></i>
+                </div>
+                <div class="ml-3 flex-grow">
+                    <h3 class="text-sm font-medium text-gray-900">National Institute of Diabetes and Digestive and Kidney Diseases</h3>
+                    <p class="mt-1 text-sm text-gray-500">Research-based information about diabetes, including clinical trials and treatment options.</p>
+                </div>
+                <div>
+                    <a href="https://www.niddk.nih.gov/health-information/diabetes" target="_blank" class="text-sm font-medium text-blue-600 hover:text-blue-500 inline-flex items-center">
+                        Visit <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 bg-white shadow-md rounded-lg overflow-hidden">
+    <div class="gradient-bg px-4 py-5 sm:px-6 text-white flex items-center">
+        <i class="fas fa-exclamation-triangle mr-3"></i>
+        <h2 class="text-xl font-bold">Emergency Information</h2>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+        <div class="bg-red-50 p-6 rounded-lg border border-red-200">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-ambulance text-red-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-lg font-medium text-red-800">Diabetes Emergency</h3>
+                    <div class="mt-2 text-sm text-red-700">
+                        <p>If you or someone else is experiencing a diabetes emergency:</p>
+                        <ul class="mt-2 list-disc pl-5 space-y-1">
+                            <li class="font-medium">Call emergency services (911 in the US)</li>
+                            <li>If the person is unconscious, check for a medical ID bracelet or necklace</li>
+                            <li>Do not give food or drink to an unconscious person</li>
+                            <li>If the person is conscious and has low blood sugar, give them a fast-acting carbohydrate</li>
+                        </ul>
+                        <div class="mt-4 p-3 bg-white rounded-lg border border-red-100">
+                            <h4 class="text-sm font-medium text-red-800 mb-2">Signs of a Diabetes Emergency:</h4>
+                            <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                <div class="flex items-start">
+                                    <span class="flex-shrink-0 h-2 w-2 rounded-full bg-red-400 mt-1.5 mr-2"></span>
+                                    <span class="text-sm">Confusion or difficulty speaking</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="flex-shrink-0 h-2 w-2 rounded-full bg-red-400 mt-1.5 mr-2"></span>
+                                    <span class="text-sm">Sweating and shakiness</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="flex-shrink-0 h-2 w-2 rounded-full bg-red-400 mt-1.5 mr-2"></span>
+                                    <span class="text-sm">Extreme thirst or frequent urination</span>
+                                </div>
+                                <div class="flex items-start">
+                                    <span class="flex-shrink-0 h-2 w-2 rounded-full bg-red-400 mt-1.5 mr-2"></span>
+                                    <span class="text-sm">Loss of consciousness</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8 flex flex-wrap justify-center gap-4">
+    <a href="{% url 'predict' %}" class="gradient-bg inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-md text-white hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+        <i class="fas fa-calculator mr-2"></i>Check Your Diabetes Risk
+    </a>
+    <a href="{% url 'education' %}" class="inline-flex items-center px-6 py-3 border border-gray-300 shadow-sm text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+        <i class="fas fa-book-medical mr-2"></i>Learn About Diabetes
+    </a>
+</div>
+
+<style>
+.card-hover {
+    transition: all 0.3s ease;
+}
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>
+{% endblock %} 

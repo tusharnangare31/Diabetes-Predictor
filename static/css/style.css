@@ -1,0 +1,61 @@
+/* Custom styles for Diabetes Predictor */
+
+/* Gradient background for hero section */
+.hero-gradient {
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+}
+
+/* Custom animation for the prediction button */
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
+
+/* Custom styling for form inputs */
+.form-input-focus:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Custom styling for the result container */
+.result-container {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Custom styling for the probability bar */
+.probability-bar {
+    transition: width 1s ease-in-out;
+}
+
+/* Custom styling for the recommendations */
+.recommendations-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.recommendations-list li:before {
+    content: "•";
+    color: #3b82f6;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .hero-gradient {
+        background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    }
+} 
